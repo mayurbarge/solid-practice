@@ -24,18 +24,25 @@ object LineSpec extends ZIOSpecDefault {
       assertTrue(line.length == 5)
     },
 
-    test("should return slope of a line") {
-      val line = Line(Point(0,0), Point(5,10))
-      assertTrue(line.slope == 2)
-    },
-
     test("should return negative infinity when line is vertically down") {
       val line = Line(Point(0,0), Point(0, -10))
 
       assertTrue(line.dy < 0)
-      assertTrue(line.dx >= 0)
+      assertTrue(line.dx == 0)
       assertTrue(line.slope == Double.NegativeInfinity)
     },
 
+    test("should return positive infinity when line is vertically up") {
+      val line = Line(Point(0,0), Point(0, 2))
+
+      assertTrue(line.dy >= 0)
+      assertTrue(line.dx == 0)
+      assertTrue(line.slope == Double.PositiveInfinity)
+    },
+
+    test("should return slope of a line") {
+      val line = Line(Point(0,0), Point(5,10))
+      assertTrue(line.slope == 2)
+    },
   )
 }

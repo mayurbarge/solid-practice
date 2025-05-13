@@ -8,6 +8,7 @@ val root = (project in file("."))
       List(
         organization := "com.example",
         scalaVersion := "2.13.16"
+        //scalaVersion := "2.13.0"
       )
     ),
     name           := "solid-practice",
