@@ -8,7 +8,7 @@ case class Line(a: Point, b: Point) {
   val isPositive = (number: Double) => !isNegative(number)
   val isNegative = (number: Double) => number < 0
 
-  def slope = {
+  def slope: Double = {
     (dy, dx) match {
       case (dy, dx) if isNegative(dy) && dx == 0 => Double.NegativeInfinity
       case (dy, dx) if isPositive(dy) && dx == 0 => Double.PositiveInfinity
@@ -24,7 +24,6 @@ object Line {
   val isParallel = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && lineAB.slope == lineCD.slope
   val isPerpendicular = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && lineAB.slope == -(1/lineCD.slope)
   val isIntersecting = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && !isParallel(lineAB, lineCD) && !isPerpendicular(lineAB, lineCD)
-
 
   def validateLine(line: Line): Validation[String, Line] = {
     if(line.a == line.b)

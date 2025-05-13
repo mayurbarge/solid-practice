@@ -9,7 +9,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quarilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assert(quadrilateral.vertices)(hasSameElements(List(Point(0,0), Point(1, 0), Point(1,1), Point(0, 1))))
     },
 
@@ -19,7 +19,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quarilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       val expectedEdges = List(lineAB, lineBC, lineCD, lineDA)
 
       assert(quadrilateral.edges)(hasSameElements(expectedEdges))
@@ -31,9 +31,28 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quarilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.perimeter == 4)
     },
 
+    test("Quadrilateral is defined when for each edge if starting point of one edge is ending point of other and vice versa") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1, 0), Point(1, 1))
+      val lineCD = Line(Point(1, 1), Point(0, 1))
+      val lineDA = Line(Point(0, 1), Point(0, 0))
+
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      assertTrue(Quadrilateral.qualifyCheck(quadrilateral))
+    },
+
+    test("Quadrilateral is not defined when for eny edge starting point or ending point does not coincide with another edge") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1, 0), Point(2, 0))
+      val lineCD = Line(Point(2, 0), Point(3, 0))
+      val lineDA = Line(Point(3, 0), Point(4, 0))
+
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      assertTrue(!Quadrilateral.qualifyCheck(quadrilateral))
+    },
   )
 }
