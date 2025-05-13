@@ -1,3 +1,5 @@
+import zio.prelude.Validation
+
 case class Quadrilateral(edges: List[Line]) {
   val vertices: List[Point] = edges.flatMap(line => List(line.a, line.b )).distinct
   val perimeter = edges.map(_.length).sum
@@ -15,4 +17,10 @@ object Quadrilateral {
     } ).reduce(_ && _)
   }
 
+  def validateQuadrilateral(quadrilateral: Quadrilateral): Validation[String, Quadrilateral] = {
+    if(qualifyCheck(quadrilateral))
+      Validation.succeed(quadrilateral)
+    else
+      Validation.fail("Invalid quadrilateral.")
+  }
 }
