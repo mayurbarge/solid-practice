@@ -1,3 +1,5 @@
+import zio.prelude.Validation
+
 case class Line(a: Point, b: Point) {
   def dy = b.yCoordinate - a.yCoordinate
   def dx = b.xCoordinate - a.xCoordinate
@@ -12,5 +14,14 @@ case class Line(a: Point, b: Point) {
       case (dy, dx) if isPositive(dy) && dx == 0 => Double.PositiveInfinity
       case _=> dy / dx
     }
+  }
+}
+
+object Line {
+  def validateLine(line: Line): Validation[String, Line] = {
+    if(line.a == line.b)
+      Validation.fail("Invalid line.")
+    else
+      Validation.succeed(line)
   }
 }

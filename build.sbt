@@ -16,6 +16,7 @@ val root = (project in file("."))
       // general
 
       "dev.zio"        %% "zio"                 % zioVersion,
+      "dev.zio" %% "zio-prelude" % "1.0.0-RC40",
 
       // test
       "dev.zio"            %% "zio-test-sbt"                    % zioVersion            % Test,

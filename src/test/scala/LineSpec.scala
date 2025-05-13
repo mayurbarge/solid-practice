@@ -1,6 +1,6 @@
-import LineSpec.test
-import PointSpec.{suite, test}
-import zio.test.{ZIOSpecDefault, _}
+import zio.test._
+import zio.test.Assertion._
+import zio.prelude.Validation
 
 object LineSpec extends ZIOSpecDefault {
   def spec = suite("LineSpec")(
@@ -43,6 +43,16 @@ object LineSpec extends ZIOSpecDefault {
     test("should return slope of a line") {
       val line = Line(Point(0,0), Point(5,10))
       assertTrue(line.slope == 2)
+    },
+
+    test("should return true when line has different points") {
+      val line = Line(Point(0,0), Point(5,10))
+      assert(Line.validateLine(line))(equalTo(Validation.succeed(line)))
+    },
+
+    test("should return false when line has same points") {
+      val line = Line(Point(5,10), Point(5,10))
+      assert(Line.validateLine(line))(equalTo(Validation.fail("Invalid line.")))
     },
   )
 }
