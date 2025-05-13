@@ -31,9 +31,11 @@ object LineSpec extends ZIOSpecDefault {
 
     test("should return negative infinity when line is vertically down") {
       val line = Line(Point(0,0), Point(0, -10))
+
+      assertTrue(line.dy < 0)
+      assertTrue(line.dx >= 0)
       assertTrue(line.slope == Double.NegativeInfinity)
     },
-
 
   )
 }
