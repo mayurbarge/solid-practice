@@ -54,5 +54,53 @@ object LineSpec extends ZIOSpecDefault {
       val line = Line(Point(5,10), Point(5,10))
       assert(Line.validateLine(line))(equalTo(Validation.fail("Invalid line.")))
     },
+
+    test("should check if lines are same") {
+      val line = Line(Point(5,10), Point(5,10))
+      assertTrue(Line.isSame(line, line))
+    },
+
+    test("should check if lines are not same") {
+      val line = Line(Point(5,10), Point(5,10))
+      assertTrue(Line.isNotSame(line, line.copy(a = Point(10, 10))))
+    },
+
+    test("should check if two lines are parallel") {
+      val lineAB = Line(Point(0,10), Point(0,10))
+      val lineCD = Line(Point(0,5), Point(0,5))
+      assertTrue(Line.isParallel(lineAB, lineCD))
+      assertTrue(Line.isParallel(lineCD, lineAB))
+    },
+
+    test("parallel check should fail if both lines are same") {
+      val line = Line(Point(0,5), Point(0,5))
+      assertTrue(!Line.isParallel(line, line))
+    },
+
+    test("should check if two lines are perpendicular") {
+      val lineAB = Line(Point(0,5), Point(0,-10))
+      val lineCD = Line(Point(5,0), Point(-5,0))
+      assertTrue(Line.isPerpendicular(lineAB, lineCD))
+      assertTrue(Line.isPerpendicular(lineCD, lineAB))
+    },
+
+    test("perpendicular check should fail if both lines are same") {
+      val line = Line(Point(0,5), Point(0,5))
+      assertTrue(!Line.isPerpendicular(line, line))
+    },
+
+    test("should check if two lines are intersecting") {
+      val lineAB = Line(Point(0,5), Point(0,-10))
+      val lineCD = Line(Point(4,0), Point(0,2))
+      val x = Line.isSame(lineAB, lineCD)
+      assertTrue(Line.isIntersecting(lineAB, lineCD))
+      assertTrue(Line.isIntersecting(lineAB, lineCD))
+    },
+
+    test("intersecting check should fail if both lines are same") {
+      val line = Line(Point(0,5), Point(0,5))
+      assertTrue(!Line.isIntersecting(line, line))
+    },
+
   )
 }

@@ -1,10 +1,4 @@
-case class Quarilateral(a: Point, b: Point, c: Point, d: Point) {
-  val edges = List(
-    Line(a, b),
-    Line(b, c),
-    Line(c, d),
-    Line(d, a)
-  )
-
+case class Quarilateral(edges: List[Line]) {
+  val vertices: List[Point] = edges.flatMap(line => List(line.a, line.b )).distinct
   val perimeter = edges.map(_.length).sum
 }
