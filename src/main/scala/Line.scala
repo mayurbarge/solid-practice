@@ -24,7 +24,7 @@ object Line {
   val isSame = (lineAB: Line, lineCD: Line) => lineAB == lineCD
   val isNotSame = (lineAB: Line, lineCD: Line) => !isSame(lineAB, lineCD)
 
-  val isParallel = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && lineAB.slope == lineCD.slope
+  val isParallel = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && Math.abs(lineAB.slope) == Math.abs(lineCD.slope)
   val isPerpendicular = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && lineAB.slope == -(1/lineCD.slope)
   val isIntersecting = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && !isParallel(lineAB, lineCD)
 
