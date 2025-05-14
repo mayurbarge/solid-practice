@@ -7,6 +7,12 @@ case class Quadrilateral(edges: List[Line]) {
     pair => Line.isIntersecting(pair.head, pair.last)
   )
 
+  val thetaOne = intersectingEdges.map(pairOfAdjacentEdges => {
+    Line.angleBetween(pairOfAdjacentEdges.head, pairOfAdjacentEdges.last)
+  })
+
+  val thetaTwo = thetaOne.map(180 - _)
+
 }
 
 object Quadrilateral {
