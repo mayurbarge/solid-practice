@@ -78,19 +78,21 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       assert(Quadrilateral.validateQuadrilateral(quadrilateral))(equalTo(Validation.fail("Invalid quadrilateral.")))
     },
 
-    test("Quadrilateral should have pair of non-intersecting edges") {
+    test("Quadrilateral should have pair of intersecting edges") {
       val lineAB = Line(Point(0,0), Point(1, 0))
       val lineBC = Line(Point(1, 0), Point(1, 1))
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
       val expectedIntersectingLines = List(
-        List(lineAB, lineCD), List(lineCD, lineAB),
-        List(lineBC, lineDA), List(lineDA, lineBC),
+        List(lineAB, lineBC), List(lineBC, lineAB),
+        List(lineBC, lineCD), List(lineCD, lineBC),
+        List(lineCD, lineDA), List(lineDA, lineCD),
+        List(lineDA, lineAB), List(lineAB, lineDA),
       )
 
       val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
-      assertTrue(expectedIntersectingLines.contains(quadrilateral.nonIntersectingEdges))
+      assertTrue(quadrilateral.intersectingEdges.exists(intersectingEdge => expectedIntersectingLines.contains(intersectingEdge)))
     },
   )
 }

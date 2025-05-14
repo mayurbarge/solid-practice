@@ -3,9 +3,9 @@ import zio.prelude.Validation
 case class Quadrilateral(edges: List[Line]) {
   val vertices: List[Point] = edges.flatMap(line => List(line.a, line.b )).distinct
   val perimeter = edges.map(_.length).sum
-  val nonIntersectingEdges: List[Line] = edges.combinations(2).filter(
+  val intersectingEdges: Option[List[Line]] = edges.combinations(2).find(
     pair => Line.isIntersecting(pair.head, pair.last)
-  ).flatten.toList
+  )
 
 }
 
