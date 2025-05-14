@@ -11,7 +11,12 @@ object ShapeSpec extends ZIOSpecDefault {
   val lineDA = Line(Point(3, 0), Point(4, 0))
 
   val edges = List(lineAB, lineBC, lineCD, lineDA)
-  def spec = suite("ShapeSpec")(
+
+  def spec = suite("CombinedSpec")(
+    shapeSpec,
+    genericShapeSpec
+  )
+  def shapeSpec = suite("ShapeSpec")(
     test("InvalidShape does not have any properties") {
       val shape = Shape()
       assertTrue(shape == InvalidShape)
@@ -21,6 +26,8 @@ object ShapeSpec extends ZIOSpecDefault {
       val shape = Shape(List.empty[Line])
       assertTrue(shape == InvalidShape)
     },
+  )
+  def genericShapeSpec = suite("GenericShapeSpec")(
 
     test("Shape is closed when for each edge if starting point of one edge is ending point of other and vice versa") {
       val lineAB = Line(Point(0,0), Point(1, 0))
@@ -45,5 +52,6 @@ object ShapeSpec extends ZIOSpecDefault {
       }
       assertTrue(!Shape.isShapeClosed(shapeWithEdges))
     },
+
   )
 }
