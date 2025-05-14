@@ -103,6 +103,24 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.thetaOne.contains(90))
       assertTrue(quadrilateral.thetaTwo.contains(90))
+    },
+
+    test("Quadrilateral area of unit edges should be 1") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1, 0), Point(1, 1))
+      val lineCD = Line(Point(1, 1), Point(0, 1))
+      val lineDA = Line(Point(0, 1), Point(0, 0))
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      assertTrue(quadrilateral.area.contains(1))
+    },
+
+    test("Quadrilateral area of non-unit edges should be 15") {
+      val lineAB = Line(Point(1,2), Point(4, 5))
+      val lineBC = Line(Point(4, 5), Point(7, 2))
+      val lineCD = Line(Point(7, 2), Point(4, 0))
+      val lineDA = Line(Point(4, 0), Point(1, 2))
+      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      assertTrue(quadrilateral.area.map(_.toInt).contains(15))
     }
   )
 }
