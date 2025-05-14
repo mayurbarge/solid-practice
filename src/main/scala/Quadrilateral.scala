@@ -29,7 +29,6 @@ case class Quadrilateral(edges: List[Line]) {
 }
 
 object Quadrilateral {
-
   def isShapeClosed(quadrilateral: Quadrilateral) = {
     val isStartPointOfLineMatchingEndOfAnotherLine = (quadrilateral: Quadrilateral, line: Line) => quadrilateral.edges.filter(_ != line).map(_.b).contains(line.a)
     val isEndPointOfLineMatchingStartOfAnotherLine = (quadrilateral: Quadrilateral, line: Line) => quadrilateral.edges.filter(_ != line).map(_.a).contains(line.b)
