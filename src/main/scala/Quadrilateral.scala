@@ -30,7 +30,7 @@ case class Quadrilateral(edges: List[Line]) {
 
 object Quadrilateral {
 
-  def qualifyCheck(quadrilateral: Quadrilateral) = {
+  def isShapeClosed(quadrilateral: Quadrilateral) = {
     val isStartPointOfLineMatchingEndOfAnotherLine = (quadrilateral: Quadrilateral, line: Line) => quadrilateral.edges.filter(_ != line).map(_.b).contains(line.a)
     val isEndPointOfLineMatchingStartOfAnotherLine = (quadrilateral: Quadrilateral, line: Line) => quadrilateral.edges.filter(_ != line).map(_.a).contains(line.b)
 
@@ -41,7 +41,7 @@ object Quadrilateral {
   }
 
   def validateQuadrilateral(quadrilateral: Quadrilateral): Validation[String, Quadrilateral] = {
-    if(qualifyCheck(quadrilateral))
+    if(isShapeClosed(quadrilateral) && quadrilateral.edges.size == 4)
       Validation.succeed(quadrilateral)
     else
       Validation.fail("Invalid quadrilateral.")
