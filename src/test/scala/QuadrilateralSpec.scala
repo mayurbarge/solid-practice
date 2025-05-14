@@ -36,35 +36,15 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       assertTrue(quadrilateral.perimeter == 4)
     },
 
-    test("Quadrilateral is defined when for each edge if starting point of one edge is ending point of other and vice versa") {
+    test("Quadrilateral validation should pass when it is closed by connecting edges and edges are 4") {
       val lineAB = Line(Point(0,0), Point(1, 0))
       val lineBC = Line(Point(1, 0), Point(1, 1))
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
       val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
-      assertTrue(Quadrilateral.isShapeClosed(quadrilateral))
-    },
-
-    test("Quadrilateral validation should pass when it is closed by connecting edges") {
-      val lineAB = Line(Point(0,0), Point(1, 0))
-      val lineBC = Line(Point(1, 0), Point(1, 1))
-      val lineCD = Line(Point(1, 1), Point(0, 1))
-      val lineDA = Line(Point(0, 1), Point(0, 0))
-
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
-      assertTrue(Quadrilateral.isShapeClosed(quadrilateral))
+      assertTrue(Shape.isShapeClosed(quadrilateral))
       assert(Quadrilateral.validateQuadrilateral(quadrilateral))(equalTo(Validation.succeed(quadrilateral)))
-    },
-
-    test("Quadrilateral is not defined when for it is not closed by edges") {
-      val lineAB = Line(Point(0,0), Point(1, 0))
-      val lineBC = Line(Point(1, 0), Point(2, 0))
-      val lineCD = Line(Point(2, 0), Point(3, 0))
-      val lineDA = Line(Point(3, 0), Point(4, 0))
-
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
-      assertTrue(!Quadrilateral.isShapeClosed(quadrilateral))
     },
 
     test("Quadrilateral validation should fail when qualification criteria is not matching") {
@@ -74,7 +54,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineDA = Line(Point(3, 0), Point(4, 0))
 
       val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
-      assertTrue(Quadrilateral.isShapeClosed(quadrilateral))
+      assertTrue(Shape.isShapeClosed(quadrilateral))
       assert(Quadrilateral.validateQuadrilateral(quadrilateral))(equalTo(Validation.fail("Invalid quadrilateral.")))
     },
 

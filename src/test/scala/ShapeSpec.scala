@@ -1,3 +1,4 @@
+import QuadrilateralSpec.test
 import TriangleSpec.{suite, test}
 import zio.test._
 import zio.test.Assertion._
@@ -21,5 +22,28 @@ object ShapeSpec extends ZIOSpecDefault {
       assertTrue(shape == InvalidShape)
     },
 
+    test("Shape is closed when for each edge if starting point of one edge is ending point of other and vice versa") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1, 0), Point(1, 1))
+      val lineCD = Line(Point(1, 1), Point(0, 1))
+      val lineDA = Line(Point(0, 1), Point(0, 0))
+
+      val shapeWithEdges = new GenericShape {
+        override val edges: List[Line] = List(lineAB, lineBC, lineCD, lineDA)
+      }
+      assertTrue(Shape.isShapeClosed(shapeWithEdges))
+    },
+
+    test("Shape is not defined when it is not closed by edges") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1, 0), Point(2, 0))
+      val lineCD = Line(Point(2, 0), Point(3, 0))
+      val lineDA = Line(Point(3, 0), Point(4, 0))
+
+      val shapeWithEdges = new GenericShape {
+        override val edges: List[Line] = List(lineAB, lineBC, lineCD, lineDA)
+      }
+      assertTrue(!Shape.isShapeClosed(shapeWithEdges))
+    },
   )
 }
