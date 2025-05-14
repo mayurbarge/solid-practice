@@ -15,6 +15,9 @@ case class Line(a: Point, b: Point) {
       case _=> dy.toDouble / dx.toDouble
     }
   }
+
+  val directionVector: List[Int] = List(b.xCoordinate-a.xCoordinate, b.yCoordinate-a.yCoordinate)
+  val magnitude = Math.sqrt(directionVector.map(Math.pow(_, 2)).sum)
 }
 
 object Line {
@@ -24,6 +27,16 @@ object Line {
   val isParallel = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && lineAB.slope == lineCD.slope
   val isPerpendicular = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && lineAB.slope == -(1/lineCD.slope)
   val isIntersecting = (lineAB: Line, lineCD: Line) => isNotSame(lineAB, lineCD) && !isParallel(lineAB, lineCD) && !isPerpendicular(lineAB, lineCD)
+
+  val dotProduct = (lineAB: Line, lineCD: Line) =>
+    (lineAB.directionVector zip lineCD.directionVector).map(pair => {
+      val (diffX,diffY) = pair
+      diffX*diffY
+    }).sum
+
+  val angleBetween = (lineAB: Line, lineCD: Line) => {
+    Math.toDegrees(Math.acos(dotProduct(lineAB, lineCD).toDouble / (lineAB.magnitude * lineCD.magnitude).toDouble))
+  }
 
   def validateLine(line: Line): Validation[String, Line] = {
     if(line.a == line.b)

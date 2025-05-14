@@ -92,7 +92,6 @@ object LineSpec extends ZIOSpecDefault {
     test("should check if two lines are intersecting") {
       val lineAB = Line(Point(0,5), Point(0,-10))
       val lineCD = Line(Point(4,0), Point(0,2))
-      val x = Line.isSame(lineAB, lineCD)
       assertTrue(Line.isIntersecting(lineAB, lineCD))
       assertTrue(Line.isIntersecting(lineAB, lineCD))
     },
@@ -102,5 +101,31 @@ object LineSpec extends ZIOSpecDefault {
       assertTrue(!Line.isIntersecting(line, line))
     },
 
+    test("line must have direction vector") {
+      val line = Line(Point(1,10), Point(3,5))
+      assertTrue(line.directionVector == List(2, -5))
+    },
+
+    test("dot product of direction vectors of a line") {
+      val lineAB = Line(Point(0,0), Point(1,1))
+      val lineCD = Line(Point(1,1), Point(2,2))
+      assertTrue(
+        Line.dotProduct(lineAB, lineCD) == 2
+      )
+    },
+
+    test("Line should have a magnitude") {
+      val line = Line(Point(0,0), Point(0,1))
+      assertTrue(
+        line.magnitude == 1
+      )
+    },
+
+    test("angle between x axis and y axis should be 90") {
+      val xAxis = Line(Point(0,5), Point(0,-5))
+      val yAxis = Line(Point(5,0), Point(-5, 0))
+      assertTrue(Line.angleBetween(yAxis, xAxis) == 90)
+      assertTrue(Line.angleBetween(xAxis, yAxis) == 90)
+    },
   )
 }
