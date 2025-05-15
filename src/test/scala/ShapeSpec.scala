@@ -2,7 +2,7 @@ import QuadrilateralSpec.test
 import TriangleSpec.{suite, test}
 import zio.test._
 import zio.test.Assertion._
-import zio.prelude.Validation
+import zio.prelude.{NonEmptyList, NonEmptyMultiSet, Validation}
 
 object ShapeSpec extends ZIOSpecDefault {
   val lineAB = Line(Point(0,0), Point(1, 0))
@@ -22,9 +22,15 @@ object ShapeSpec extends ZIOSpecDefault {
       assertTrue(shape == InvalidShape)
     },
 
-    test("InvalidShape does not contain any edges") {
-      val shape = Shape(List.empty[Line])
-      assertTrue(shape == InvalidShape)
+    test("Given four edges Quadrilateral should be created") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1,0), Point(1,1))
+      val lineCD = Line(Point(1,1), Point(0,1))
+      val lineDA = Line(Point(0,1), Point(0,0))
+      val edges = NonEmptyList(lineAB, lineBC, lineCD, lineDA)
+
+      val validatedShape = Shape(edges)
+      assertTrue(validatedShape.isInstanceOf[Quadrilateral])
     },
   )
   def genericShapeSpec = suite("GenericShapeSpec")(

@@ -1,4 +1,4 @@
-import zio.prelude.Validation
+import zio.prelude.{NonEmptyList, Validation}
 
 trait Shape
 abstract class GenericShape(val edges: List[Line]) extends Shape {
@@ -40,5 +40,10 @@ object Shape {
     } ).reduce(_ && _)
   }
   def apply() = InvalidShape
-  def apply(edges: List[Line]) = InvalidShape
+  def apply(edges: NonEmptyList[Line]) = {
+    edges match {
+      case _ if Quadrilateral.validateQuadrilateral(new Quadrilateral(edges)).isSuccess => new Quadrilateral(edges)
+      case _=> InvalidShape
+    }
+  }
 }
