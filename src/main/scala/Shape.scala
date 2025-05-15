@@ -1,8 +1,7 @@
 import zio.prelude.Validation
 
 trait Shape
-abstract class GenericShape extends Shape {
-  val edges: List[Line]
+abstract class GenericShape(val edges: List[Line]) extends Shape {
   val vertices: List[Point] = edges.flatMap(line => List(line.a, line.b )).distinct
   val perimeter = edges.map(_.length).sum
   val intersectingEdges: Option[List[Line]] = edges.combinations(2).find(

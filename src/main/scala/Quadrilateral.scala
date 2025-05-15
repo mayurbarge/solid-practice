@@ -1,6 +1,6 @@
 import zio.prelude.Validation
 
-case class Quadrilateral(edges: List[Line]) extends GenericShape
+class Quadrilateral(override val edges: List[Line]) extends GenericShape(edges)
 
 object Quadrilateral {
   def validateQuadrilateral(quadrilateral: Quadrilateral): Validation[String, Quadrilateral] = {

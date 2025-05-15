@@ -10,7 +10,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assert(quadrilateral.vertices)(hasSameElements(List(Point(0,0), Point(1, 0), Point(1,1), Point(0, 1))))
     },
 
@@ -20,7 +20,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       val expectedEdges = List(lineAB, lineBC, lineCD, lineDA)
 
       assert(quadrilateral.edges)(hasSameElements(expectedEdges))
@@ -32,7 +32,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.perimeter == 4)
     },
 
@@ -42,7 +42,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(Shape.isShapeClosed(quadrilateral))
       assert(Quadrilateral.validateQuadrilateral(quadrilateral))(equalTo(Validation.succeed(quadrilateral)))
     },
@@ -53,7 +53,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(2, 0), Point(3, 0))
       val lineDA = Line(Point(3, 0), Point(4, 0))
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(Shape.isShapeClosed(quadrilateral))
       assert(Quadrilateral.validateQuadrilateral(quadrilateral))(equalTo(Validation.fail("Invalid quadrilateral.")))
     },
@@ -65,7 +65,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineDA = Line(Point(3, 0), Point(4, 0))
       val extraLine = Line(Point(3, 0), Point(4, 0))
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA, extraLine))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA, extraLine))
       assert(Quadrilateral.validateQuadrilateral(quadrilateral))(equalTo(Validation.fail("Invalid quadrilateral.")))
     },
 
@@ -82,7 +82,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
         List(lineDA, lineAB), List(lineAB, lineDA),
       )
 
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.intersectingEdges.exists(intersectingEdge => expectedIntersectingLines.contains(intersectingEdge)))
     },
 
@@ -91,7 +91,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineBC = Line(Point(1, 0), Point(1, 1))
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.thetaOne.contains(90))
       assertTrue(quadrilateral.thetaTwo.contains(90))
     },
@@ -101,7 +101,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineBC = Line(Point(1, 0), Point(1, 1))
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.area.contains(1))
     },
 
@@ -110,7 +110,7 @@ object QuadrilateralSpec extends ZIOSpecDefault {
       val lineBC = Line(Point(4, 5), Point(7, 2))
       val lineCD = Line(Point(7, 2), Point(4, 0))
       val lineDA = Line(Point(4, 0), Point(1, 2))
-      val quadrilateral = Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
+      val quadrilateral = new Quadrilateral(List(lineAB, lineBC, lineCD, lineDA))
       assertTrue(quadrilateral.area.map(_.toInt).contains(15))
     }
   )
