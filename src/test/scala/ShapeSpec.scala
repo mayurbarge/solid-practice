@@ -22,7 +22,7 @@ object ShapeSpec extends ZIOSpecDefault {
       assertTrue(shape == InvalidShape)
     },
 
-    test("Given four edges Quadrilateral should be created") {
+    test("Given four edges Quadrilateral Shape should be created") {
       val lineAB = Line(Point(0,0), Point(1, 0))
       val lineBC = Line(Point(1,0), Point(1,1))
       val lineCD = Line(Point(1,1), Point(0,1))
@@ -31,6 +31,17 @@ object ShapeSpec extends ZIOSpecDefault {
 
       val validatedShape = Shape(edges)
       assertTrue(validatedShape.isInstanceOf[Quadrilateral])
+    },
+
+    test("Given four edges Square Shape should be created") {
+      val lineAB = Line(Point(0,0), Point(1, 0))
+      val lineBC = Line(Point(1,0), Point(1,1))
+      val lineCD = Line(Point(1,1), Point(0,1))
+      val lineDA = Line(Point(0,1), Point(0,0))
+      val edges = NonEmptyList(lineAB, lineBC, lineCD, lineDA)
+
+      val validatedShape = Shape(edges)
+      assertTrue(validatedShape.isInstanceOf[Square])
     },
   )
   def genericShapeSpec = suite("GenericShapeSpec")(

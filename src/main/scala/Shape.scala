@@ -41,8 +41,15 @@ object Shape {
   }
   def apply() = InvalidShape
   def apply(edges: NonEmptyList[Line]) = {
+    val validateQuadrilateral =
+      (edges: NonEmptyList[Line]) => Quadrilateral.validateQuadrilateral(new Quadrilateral(edges)).isSuccess
+
+    val validateSquare =
+      (edges: NonEmptyList[Line]) => Square.validateSquare(new Square(edges)).isSuccess
+
     edges match {
-      case _ if Quadrilateral.validateQuadrilateral(new Quadrilateral(edges)).isSuccess => new Quadrilateral(edges)
+      case _ if validateSquare(edges) => new Square(edges)
+      case _ if validateQuadrilateral(edges) => new Quadrilateral(edges)
       case _=> InvalidShape
     }
   }
