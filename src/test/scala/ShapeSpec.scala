@@ -52,7 +52,9 @@ object ShapeSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(1, 1), Point(0, 1))
       val lineDA = Line(Point(0, 1), Point(0, 0))
 
-      val shapeWithEdges = new GenericShape(List(lineAB, lineBC, lineCD, lineDA)) {}
+      val shapeWithEdges = new GenericShape(List(lineAB, lineBC, lineCD, lineDA)) {
+        val area = None
+      }
       assertTrue(Shape.isShapeClosed(shapeWithEdges))
     },
 
@@ -62,7 +64,9 @@ object ShapeSpec extends ZIOSpecDefault {
       val lineCD = Line(Point(2, 0), Point(3, 0))
       val lineDA = Line(Point(3, 0), Point(4, 0))
 
-      val shapeWithEdges = new GenericShape(List(lineAB, lineBC, lineCD, lineDA)) {}
+      val shapeWithEdges = new GenericShape(List(lineAB, lineBC, lineCD, lineDA)) {
+        val area = None
+      }
       assertTrue(!Shape.isShapeClosed(shapeWithEdges))
     },
 

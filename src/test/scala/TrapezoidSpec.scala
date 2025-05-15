@@ -25,6 +25,15 @@ object TrapezoidSpec extends ZIOSpecDefault {
       assertTrue(trapezoid.isInstanceOf[Quadrilateral])
     },
 
+    test("Trapezoid should have one pair of parallel edges") {
+      val lineAB = Line(Point(0,0), Point(4, 0))
+      val lineBC = Line(Point(4,0), Point(2,1))
+      val lineCD = Line(Point(2,1), Point(1,1))
+      val lineDA = Line(Point(1,1), Point(0,0))
+
+      val trapezoid = Trapezoid(NonEmptyList(lineAB, lineBC, lineCD, lineDA))
+      assertTrue(trapezoid.parallelEdgesPair.size == 1)
+    },
 
   )
 }
