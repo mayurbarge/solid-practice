@@ -33,7 +33,7 @@ object ShapeSpec extends ZIOSpecDefault {
       assertTrue(validatedShape.isInstanceOf[Quadrilateral])
     },
 
-    test("Given four edges Square Shape should be created") {
+    test("Given four edges and two parallel edge pairs Square Shape should be created") {
       val lineAB = Line(Point(0,0), Point(1, 0))
       val lineBC = Line(Point(1,0), Point(1,1))
       val lineCD = Line(Point(1,1), Point(0,1))
@@ -42,6 +42,17 @@ object ShapeSpec extends ZIOSpecDefault {
 
       val validatedShape = Shape(edges)
       assertTrue(validatedShape.isInstanceOf[Square])
+    },
+
+    test("Given four edges and one parallel edge pair Trapezoid Shape should be created") {
+      val lineAB = Line(Point(0,0), Point(4, 0))
+      val lineBC = Line(Point(4,0), Point(3,1))
+      val lineCD = Line(Point(3,1), Point(2,1))
+      val lineDA = Line(Point(2,1), Point(0,0))
+      val edges = NonEmptyList(lineAB, lineBC, lineCD, lineDA)
+
+      val validatedShape = Shape(edges)
+      assertTrue(validatedShape.isInstanceOf[Trapezoid])
     },
   )
   def genericShapeSpec = suite("GenericShapeSpec")(

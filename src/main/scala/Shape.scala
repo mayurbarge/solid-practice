@@ -24,8 +24,12 @@ object Shape {
     val validateSquare =
       (edges: NonEmptyList[Line]) => Square.validateSquare(new Square(edges)).isSuccess
 
+    val validateTrapezoid =
+      (edges: NonEmptyList[Line]) => Trapezoid.validateTrapezoid(new Trapezoid(edges)).isSuccess
+
     edges match {
       case _ if validateSquare(edges) => new Square(edges)
+      case _ if validateTrapezoid(edges) => new Trapezoid(edges)
       case _ if validateQuadrilateral(edges) => new Quadrilateral(edges)
       case _=> InvalidShape
     }
